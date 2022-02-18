@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  lambdaImageUrl:
+    Type: String
+  lambdaFunctionName:
+    Type: String
+    Default: runner
+
+Resources:
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      PackageType: Image
+      Code:
+        ImageUri: !Ref lambdaImageUrl
+      FunctionName: !Ref lambdaFunctionName
+      MemorySize: 256
+      Role: !GetAtt LambdaIAMRole.Arn
+  
+  LambdaIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com

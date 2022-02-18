@@ -1,0 +1,5 @@
+pyvirtualdisplay
+awslambdaric
+selenium
+boto3
+twilio
